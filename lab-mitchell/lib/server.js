@@ -2,15 +2,13 @@
 
 const http = require('http');
 const bodyParser = require('./body-parse');
+const cowsay = require('cowsay');
 
 const app = http.createServer((req, res) => {
   bodyParser(req).then(request => {
-    if(request.method === 'GET' && request.url.pathname === '/time') {
-      res.wirteHead(200, {'Content-Type': 'application/json'});
-      res.write(JSON.stringify({
-        now: Date.now(),
-        date: new Date(),
-      }));
+    if(request.method === 'GET' && request.url.pathname === '/') {
+      res.writeHead(200, {'Content-Type': 'application/json'});
+      res.write('hello from my server!');
       res.end();
       return;
     }
@@ -22,13 +20,21 @@ const app = http.createServer((req, res) => {
       return;
     }
 
+    if(request.method === 'GET' && request.url.pathname === '/cowsay') {
+      console.log(request.url.query);
+      res.writeHead(200, {'Content-Type': 'application/json'});
+      res.write(cowsay.say(request.url.query));
+      res.end();
+      return;
+    }
+
     res.writeHead(404, {'Content-Type': 'text/plain'});
     res.write('Not Found');
     res.end();
     return;
   }).catch(err => {
     res.writeHead(400, {'Content-Type': 'text/plain'});
-    res.write('Bad Request');
+    res.write(cowsay.say({text: 'bad request'}));
     res.end();
     return;
   });
