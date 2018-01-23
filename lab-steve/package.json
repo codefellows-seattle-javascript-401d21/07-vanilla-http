@@ -1,0 +1,27 @@
+{
+  "name": "07-vanilla-http",
+  "version": "1.0.0",
+  "description": "HTTP Server",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stevegcarpenter/07-vanilla-http.git"
+  },
+  "author": "Steve Carpenter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stevegcarpenter/07-vanilla-http/issues"
+  },
+  "homepage": "https://github.com/stevegcarpenter/07-vanilla-http#readme",
+  "devDependencies": {
+    "eslint": "^4.16.0",
+    "jest": "^22.1.4",
+    "superagent": "^3.8.2"
+  }
+}
