@@ -12,18 +12,26 @@ const app = http.createServer((req, res) => {
       res.end();
       return;
     }
-
-    if(request.method === 'POST' && request.url.pathname === '/echo') {
-      res.writeHead(201, {'Content-Type': 'application/json'});
-      res.write(JSON.stringify(request.body));
+    
+    if(request.method === 'GET' && request.url.pathname === '/cowsay') {
+      // console.log(request.url.query);
+      res.writeHead(200, {'Content-Type': 'application/json'});
+      res.write(cowsay.say(request.url.query));
       res.end();
       return;
     }
 
-    if(request.method === 'GET' && request.url.pathname === '/cowsay') {
-      console.log(request.url.query);
-      res.writeHead(200, {'Content-Type': 'application/json'});
-      res.write(cowsay.say(request.url.query));
+    // if(request.method === 'POST' && request.url.pathname === '/echo') {
+    //   res.writeHead(201, {'Content-Type': 'application/json'});
+    //   res.write(JSON.stringify(request.body));
+    //   res.end();
+    //   return;
+    // }
+
+    if(request.method === 'POST' && request.url.pathname === '/cowsay') {
+      console.log(request.url.pathname);
+      res.writeHead(201, {'Content-Type': 'text/plain'});
+      res.write(cowsay.say(request.body));
       res.end();
       return;
     }
