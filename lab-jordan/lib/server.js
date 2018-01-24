@@ -18,12 +18,12 @@ const app = http.createServer((req, res) => {
     if (request.method === 'GET' && request.url.pathname === '/cowsay') {
       if (!request.url.query.text) {
         res.writeHead(400, {'Content-Type': 'text/plain'});
-        res.write( cowsay.say({text: 'bad request'}) );
+        res.write( cowsay.say({'text': 'bad request'}) );
         res.end();
         return;
       }
       res.writeHead(200, {'Content-Type': 'text/plain'});
-      res.write( cowsay.say({text: request.url.query}) );
+      res.write( cowsay.say({'text': request.url.query.text}) );
       res.end();
       return;
     }
