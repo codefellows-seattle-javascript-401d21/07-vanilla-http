@@ -7,9 +7,8 @@ module.exports = function(request){
   return new Promise((resolve, reject) => {
     request.url = url_parser(request.url);
     request.url.query = queryStr_parser(request.url.query);
-    
     let mesg = '';
-    request.on('data', data => data += data.toString);
+    request.on('data', data => mesg += data.toString());
     request.on('end', () => {
       try {
         if(mesg) request.body = JSON.parse(mesg);

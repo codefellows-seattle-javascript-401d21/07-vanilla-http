@@ -9,9 +9,10 @@ const app = http.createServer((req, res) => {
   body_parser(req)
     .then(request => {
       let rm = request.method.toLowerCase();
-      if (rm !== 'get' && rm !== 'post') return httpResponse.call(errObject);  
-      let respObj = routes[rm](request.url.pathname, request.url.query);
-      console,log('respObj', respObj);
+      if (rm !== 'get' && rm !== 'post') return httpResponse.call(errObject);
+      let queryString = request.url.query;
+      if (rm === 'post') queryString = request.body;
+      let respObj = routes[rm](request.url.pathname, queryString);
       httpResponse.call(respObj);
     })
     .catch(err => {
