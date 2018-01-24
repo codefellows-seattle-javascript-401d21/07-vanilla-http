@@ -3,7 +3,6 @@
 const http = require('http');
 const bodyParser = require('./body-parse');
 const cowsay = require('cowsay');
-const PORT = process.env.PORT || 3000;
 
 const app = http.createServer((req, res) => {
     bodyParser.parse(req)
@@ -20,7 +19,7 @@ const app = http.createServer((req, res) => {
                     res.writeHead(200, {'Content-Type': 'text/plain'});
                     res.write(cowsay.say(request.url.query));
                 } else {
-                    res.writeHead(200, {'Content-Type': 'text/plain'});
+                    res.writeHead(400, {'Content-Type': 'text/plain'});
                     res.write(cowsay.say({text: 'bad request'}));
                 }
                 res.end();
