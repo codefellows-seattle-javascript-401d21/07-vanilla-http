@@ -8,20 +8,23 @@ module.exports = function(request) {
     request.url = urlParser.parse(request.url);
     request.url.query = queryString.parse(request.url.query);
 
-    if (request.method !== 'POST' && request.method !== 'PUT') return (request);
-
+    if(request.method !== 'POST' && request.method !== 'PUT')  return resolve(request);
+    
     let message = '';
+    
     request.on('data', data => {
-      message =+ data.toString();
+      message += data.toString();
     });
+
     request.on('end', () => {
       try {
         request.body = JSON.parse(message);
-        return resolve (request);
-      } catch (err) {
+        return resolve(request);
+      } catch(err) {
         return reject(err);
       }
     });
+
     request.on('error', err => {
       return reject(err);
     });

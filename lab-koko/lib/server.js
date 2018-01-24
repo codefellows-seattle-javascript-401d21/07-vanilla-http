@@ -7,42 +7,34 @@ const cowsay = require('cowsay');
 const app = http.createServer((req, res) => {
   bodyParser(req)
     .then(request => {
-      if(request.method === 'GET' && request.url.pathname === '/time') {
-        res.writeHead(200, {'Content': 'application/json'});
-        res.writr(JSON.stringify({
-          now: Date.now(),
-          date: new Date(),
-        }));
-        res.end();
-        return;
-      }
       if (request.method === 'GET' && request.url.pathname === '/') {
         res.writeHead(200,{'Content-Type': 'text/plain'});
         res.write('Hello from my server!');
         res.end();
+        return;
       }
-      if(request.method === 'GET' && request.url.pathname === '/cowsay') {
+
+      if(request.method === 'GET' && request.url.pathname === '/cowsay' && request.url.query.text) {
         res.writeHead(200, {'Content-Type': 'text/plain'});
-        if (request.url.query.text)res.write(cowsay.say({
-          text : `${request.url.query.text}`,
-        }));
+        res.write(cowsay.say(request.url.query));
         res.end();
         return;
       }
-      if(request.method === 'POST' && request.url.pathname === '/echo') {
-        res.writeHead(201, {'Content-Type': 'application/json'});
-        res.write(JSON.stringify(request.body));
+    
+      if(request.method === 'POST' && request.url.pathname === '/cowsay' && request.body){
+        res.writeHead(201, {'Content-Type': 'text/plain'});
+        res.write(cowsay.say(request.body));
         res.end();
         return;
       }
       res.writeHead(404, {'Content-Type': 'text/plain'});
-      res.write('Not Found');
+      res.write(cowsay.say({text : 'Bad Request'}));
       res.end();
       return;
     })
-    .catch(err => {
+    .catch(() => {
       res.writeHead(400, {'Content-Type': 'text/plain'});
-      res.write('Bad Rquest');
+      res.write(cowsay.say({text : 'Bad Request'}));
       res.end();
       return;
     });

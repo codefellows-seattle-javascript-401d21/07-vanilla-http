@@ -10,13 +10,9 @@ describe('Server Module', () => {
   describe('Valid request to the API', () => {
     describe('GET /', () => {
       it('should respond with a status of 200', done => {
-         superagent.get(':4444/')
+        superagent.get(':4444/')
           .then(res => {
             expect(res.status).toBe(200);
-            done();
-          });
-          .catch(err =>{ 
-            console.log(err);
             done();
           });
       });

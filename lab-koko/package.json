@@ -23,11 +23,15 @@
       "dependencies": {
         "eslint": "^4.16.0",
         "jest": "^22.1.4",
-        "superagent": "^3.8.2"
+        "superagent": "^3.8.2",
+        "cowsay": "^1.2.1"
       }
     }
   },
   "dependencies": {
-    "cowsay": "^1.2.1"
+    "cowsay": "^1.2.1",
+    "jest": "^22.1.4",
+    "nodemon": "^1.14.11",
+    "superagent": "^3.8.2"
   }
 }
