@@ -11,12 +11,28 @@
     "start": "node index.js",
     "start:watch": "nodemon index.js"
   },
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "coverageDirectory": "./coverage",
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
+  },
   "author": "Hector Norza",
   "license": "MIT",
   "devDependencies": {
     "jest": "^22.1.4"
   },
   "dependencies": {
-    "cowsay": "^1.2.1"
+    "body-parser": "^1.18.2",
+    "cowsay": "^1.2.1",
+    "superagent": "^3.8.2"
   }
 }
