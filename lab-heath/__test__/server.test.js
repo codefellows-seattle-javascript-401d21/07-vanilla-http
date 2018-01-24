@@ -140,12 +140,6 @@ describe('Server module', function() {
             expect(err).toBeInstanceOf(Object);
           });
       });
-    });
-  });
-
-  //ERROR CATCH ALL
-  describe('invalid Request to the API', () => {
-    describe('.catch at the end', () => {
       it('this should be the .catch at the end if nothing is sent', () => {
         return superagent.put(':4000/')
           .catch(err => {

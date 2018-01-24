@@ -1,125 +1,294 @@
 
-# 06-tcp-chat
+# 06-HTTP lab 
 
 ### Installing and How to use.
 
-To install this program, place fork and 'git clone' this repo to your computer. From the terminal, navigate to  `lab-heath`. once there, install NPM but typing in , `nmp install`, and you need to do a `npm init`. after that you need to install Faker which is done with `npm install faker`. this npm package will let you have a random name at the start of the app.
+To install this program, place fork and 'git clone' this repo to your computer. From the terminal, navigate to  `lab-heath`. once there, install NPM but typing in , `nmp install`, and you need to do a `npm init`. after that you need to install jest, superagent, url, querystring, and cowsay which is done with `npm install -D jest superagent url quertstring cowsay`. 
 
-To use the code, fo to your terminal and navigate to the `lab-heath` and type
-```javascript
-node server.js
-```
 
-this will start off your server so you then can connect to you via your IP address.  now on a different terminal window, type in the `nc -your ip address- 3000` you IP address change depending on what wifi you are on the one. the school one and your home one are different so make sure it is correct.
-
-once this is done, you will be in a chat room that you can talk to anyone else that you send `nc -your ip address- 3000` too. however, you do need to be on the same wifi for this to work.
-
-### some helpful commands
-
-you have a few commands to use to make this app more playful. you have `/list`, `/cn`, `/dm` and you have `/quit`.
-
-### code for `/list` and how it starts off.
-`/list` - will let you see everyone that is connected at that time. this will only be displayed to you.
-
-this kicks off this function. Data is what the person writes in the terminal. and we set that to `text` and the we emit it which then sends that info to the CDM.js page
+next you need to have these scripts adjusted in your package.json file.
 
 ```javascript
-socket.on('data', function(data) {
-  let text = cmd.showData(data);
-  socket.emit(text.command, text);
-});
-```
+"scripts": {
+    "test": "jest",
+    "lint": "eslint",
+    "start": "node index.js",
+    "start:watch": "nodemon index.js"
+  },
+  ```
 
-here is what the CDM.js page looks like. data(text from the `emit()`) is passed into it and it will look for the command that you entered and if it does not fine it. it will then just return the dataObj with a property of command of message which will be read back on the server.js page. BUT here we are looking for the `/list` input so we will do what the `/list` does on line 45 and when done at line 46, it will return the object on line 52.
+from there, you can go to your terminal and type, 
+
 ```javascript
-cmd.showData = function(data) {
-
-  let dataObj = {};
-  let inputData = data.toString().slice(0, -1).split(' ');
-  if (inputData[0][0] === '/') {
-    if (inputData[0] === '/quit') {
-      dataObj.command = 'quit';
-    }
-    if (inputData[0] === '/dm') {
-      dataObj.command = 'dm';
-      dataObj.recipient = inputData[1];
-      dataObj.message = inputData.slice(2).join(' ');
-    }
-    if (inputData[0] === '/list') {
-      dataObj.command = 'list';
-    }
-    if (inputData[0] === '/cn') {
-      dataObj.command = 'cn';
-      dataObj.newNick = inputData[1];
-    }
-    return dataObj;
-  } else {
-    dataObj.command = 'message';
-    dataObj.message = inputData.join(' ');
-    return dataObj;
-  }
-};
+node run start
 ```
+and this will start up your server, if you do `npn run start:watch`, this will let you see it in your localhost in your browser.
 
-once back on the server.js page, we then do this function
+
+### some helpful commands  
+
+
+now you can do and this`localhost:3000/` should print `hello from my server`.  
+
+### function code for this call
+
 ```javascript
-socket.on('list', function() {
-  socket.write(`connected users\n`);
-  clientPool.map(clint => socket.write(`\t${clint.nick}\n`));
-});
+if(parserRequest.method === 'GET' && parserRequest.url.pathname === '/') {
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.write('hello from my server');
+        res.end();
+        return;
+      }
 ```
 
-this will write the list of people on the server.
+if you type `localhost:3000/cowsay?text={your saying here}` should print.
 
-`/cn` -  will let you change your name is you wish. type in `/cn` and your name that you want and it will be changed to that.
+### function code for this call
 
-```
-/cn tim
-user - Holden Tremblay in now "tim"
-```
-
-### code for `/cn`
-use the code above line 32-58 for what it does on the CDM.js page
 ```javascript
-socket.on('cn', function(obj) {
-  let oldName = client.nick;
-  client.nick = obj.newNick;
-  let messageToAll = `${oldName} in now "${client.nick}"\n`;
-  let text = cmd.showData(messageToAll);
-  socket.emit(text.command, text);
-  socket.write(`you are now "${client.nick}"\n`);
-});
+ if(parserRequest.method === 'GET' && parserRequest.url.pathname === `/cowsay`) {
+        if (parserRequest.url.query.text) {
+          res.writeHead(200, {'Content-Type': 'text/plain'});
+          res.write(cowsay.say({ text: `${parserRequest.url.query.text}`}));
+          res.end();
+          return;
+        }
 ```
 
-`/dm` -  you can Direct message someone if you like, you have to type `/dm` and follow it with the person you wish to talk to.  here is an example
-
-```
-/dm tim hey how goes it?
-```
-and then tim will get this
-
-```
-dam: hey how goes it
-```
-
-###code for `/dm`
 ```javascript
-socket.on('dm', function(obj) {
-  let clientToMessage = obj.recipient;
-  let client1 = clientPool.filter(clint => clint.nick === clientToMessage);
-  client1[0].socket.write(`${client.nick}: ${obj.message}\n`);
-});
+ _______
+< hello >
+ -------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
 ```
 
-we also have `/quit` that will log you out of the server.
+if you type `localhost:3000/cowsay?text=` with out any input, it will diplay  
 
-### code for `/quit`
+`dude, you did not write anything!`  
+
+### function code for this part  
 ```javascript
-socket.on('quit', function() {
-  clientPool = clientPool.filter(c => c.user !== client.user);
-  clientPool.map(c => c.socket.write(`\t${client.nick} has left the conversation\n`));
-  socket.end();
-});
+if (!parserRequest.url.query.text) {
+          res.writeHead(400, {'Content-Type': 'text/plain'});
+          res.write('dude, you did not write anything!');
+          res.end();
+          return;
+        }
+      }
+```
+
+we have also some post calls but you have to use a third party app like postman.
+
+if you do that. just simple type `localhost:3000/cowsay?text={your saying here}`
+and make sure set it to POST not the defualt GET.
+
+### code for these functions
+
+```javascript
+if(parserRequest.method === 'POST' && parserRequest.url.pathname === '/cowsay') {
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.write(JSON.stringify(parserRequest.body));
+        res.end();
+        return;
+      }
+    })
+```
+
+and the catch for the error is this code
+
+```javascript
+ .catch(err => {
+      res.writeHead(400, { 'Content-Type': 'text/plain' });
+      res.write('Bad parserRequest');
+      res.end();
+      return;
+    });
+```
+
+### testing 
+
+testings was done with superagent to make the calls for us and the test code looks like this
+
+### test block 1.
+these test checks to see if we connect to the server
+
+it #1 checks the status code
+it #2 checks to see if text to be sent to us is matching
+it #3 checks to see if the response is a object
+
+```javascript
+describe('Valid Request to the API', () => {
+    describe('GET /', () => {
+      it('should respond with a status 200', () => {
+        return superagent.get(':4000/')
+          .then(res => {
+            expect(res.status).toBe(200);
+          });
+        //.catch() // usually not needed in a case of successful request
+      });
+      it('should respond should be the opening saying', () => {
+        return superagent.get(':4000/')
+          .then(res => {
+            expect(res.text).toBe('hello from my server');
+          });
+      });
+      it('should respond should be an object', () => {
+        return superagent.get(':4000/')
+          .then(res => {
+            expect(res.body).toBeInstanceOf(Object);
+          });
+      });
+    });
+  });
+```
+
+### test block 2.
+these test checks to see if we send something into the URL that we can pass along so we can have it send some text back.
+
+it #1 checks the status code
+it #2 checks to see if text to be sent to us is matching
+it #3 checks to see if the response is a object
+
+```javascript
+ describe('Valid Request to the API', () => {
+    describe('GET /cowsay that passes and builds a saying', () => {
+      it('should respond with a status 200', () => {
+        return superagent.get(':4000/cowsay?text=hello')
+          .then(res => {
+            expect(res.status).toBe(200);
+          });
+        //.catch() // usually not needed in a case of successful request
+      });
+      it('should respond what we have it write', () => {
+        return superagent.get(':4000/cowsay?text=hello')
+          .then(res => {
+            expect(res.text).toBe(cowsay.say({ text: 'hello'}));
+          });
+      });
+      it('should respond should be an object', () => {
+        return superagent.get(':4000/cowsay?text=hello')
+          .then(res => {
+            expect(res.body).toBeInstanceOf(Object);
+          });
+      });
+    });
+  });
+```
+
+### test block 3.
+these test checks if we get invalid response or error back.
+
+it #1 checks the status code
+it #2 checks to see if text to be sent to us is matching
+it #3 checks to see if the response is a object
+
+```javascript
+ describe('invalid Request to the API', () => {
+    describe('GET /cowsay that fails', () => {
+      it('should error respond with a status 400', () => {
+        return superagent.get(':4000/cowsay?text=')
+          .then(res => {
+          })
+          .catch(err => {
+            expect(err.status).toBe(400);
+          });
+      });
+      it('should respond what we have it write', () => {
+        return superagent.get(':4000/cowsay?text=')
+          .then(res => {
+          })
+          .catch(err => {
+            expect(err.response.text).toBe('dude, you did not write anything!');
+          });
+      });
+      it('should error respond should be a object', () => {
+        return superagent.get(':4000/cowsay?text=')
+          .then(res => {
+          })
+          .catch(err => {
+            expect(err).toBeInstanceOf(Object);
+          });
+      });
+    });
+  });
+```
+
+### test block 4.
+these test checks if we get valid response back from the API.
+
+it #1 checks the status code
+it #2 checks to see if text to be sent to us is matching
+it #3 checks to see if the response is a object
+
+```javascript
+ describe('Valid Request to the API', () => {
+    describe('POST /cowsay that passes', () => {
+      it('should respond with a status 200', () => {
+        return superagent.post(':4000/cowsay?text=hello')
+          .send({name: 'hello'})
+          .then(res => {
+            expect(res.status).toBe(200);
+          });
+      });
+      it('should have a object that matchs the sent item', () => {
+        return superagent.post(':4000/cowsay?text=hello')
+          .send({'text': 'hello'})
+          .then(res => {
+            expect(res.text).toBe('{"text":"hello"}');
+          });
+      });
+      it('should respond should be a object if something was sent', () => {
+        return superagent.post(':4000/cowsay?text=hello')
+          .send({'text': 'hello'})
+          .then(res => {
+            expect(res.body).toBeInstanceOf(Object);
+          });
+      });
+    });
+  });
+```
+
+### test block 5.
+these test checks if we get invalid response back from the API.
+
+it #1 checks the status code
+it #2 checks to see if its an object
+it #3 checks to see if the response matachs the saying given
+
+```javascript
+ describe('invalid Request to the API', () => {
+    describe('POST /cowsay that fails', () => {
+      it('should give me a 400 status if nothing is sent', () => {
+        return superagent.post(':4000/cowsay?text=')
+          .send()
+          .then(res => {
+          })
+          .catch(err => {
+            expect(err.status).toBe(400);
+          });
+      });
+      it('should error response should be an object', () => {
+        return superagent.put(':4000/cowsay?text=')
+          .send()
+          .then(res => {
+          })
+          .catch(err => {
+            expect(err).toBeInstanceOf(Object);
+          });
+      });
+      it('this should be the .catch at the end if nothing is sent', () => {
+        return superagent.put(':4000/')
+          .catch(err => {
+            expect(err.response.text).toBe('Bad parserRequest');
+          });
+      });
+    });
+  });
 ```
 
 help they is helpful
+
