@@ -25,7 +25,6 @@ const app = http.createServer((req, res) => {
     res.write(this.body);
     res.end();
   }
-
 });
 
 const server = module.exports = {};

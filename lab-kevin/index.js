@@ -1,5 +1,6 @@
 'use strict';
 
 const server = require('./lib/server');
+const PORT  = process.env.PORT || 3000;
 
-server.start(3000, () => console.log('Listening on PORT 3000'));
+server.start(PORT, () => console.log(`Listening on port ${PORT}`));
