@@ -1,0 +1,14 @@
+{
+  "name": "lab-melanie",
+  "version": "1.0.0",
+  "description": "lab 06 vanilla http",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest --verbose"
+  },
+  "author": "melanie",
+  "license": "ISC"
+}
