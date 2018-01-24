@@ -35,12 +35,23 @@ describe('server module', function() {
       //       expect(res.text.includes('thisismymessage')).toBe(true);
       //     });
       // });
-      it('should respond with a status of 400 if the query is invalid', () => {
+      // it('should respond with a status of 400 if the query is invalid', () => {
+      //   return superagent.get(':4444/cowsay')
+      //     .then(res => {
+      //       console.log(res);
+      //     }).catch(res => {
+      //       expect(res.status).toBe(400);
+      //     }
+
+      //     );
+      // });
+      it('should respond with a bad response if the query is invalid', () => {
         return superagent.get(':4444/cowsay')
           .then(res => {
             console.log(res);
           }).catch(res => {
-            expect(res.status).toBe(400);
+            console.log(res.response.text);
+            expect(res.response.text.includes('< bad request >')).toBe(true);
           }
 
           );
