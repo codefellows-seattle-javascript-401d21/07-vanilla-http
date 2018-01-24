@@ -16,11 +16,11 @@ const app = http.createServer((req, res) => {
       }
       if (request.method === 'GET' && request.url.pathname === '/cowsay' && request.query.text) {
         res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.write(cowsay({ text: request.query.text });
+        res.write(cowsay.say({ text: request.query.text }));
       }
       if (request.method === 'POST' && request.url.pathname === '/cowsay' && request.body) {
         res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.write(cowsay({text: request.body}));
+        res.write(cowsay.say({text: request.body}));
         res.end();
         return;
       }
@@ -31,7 +31,7 @@ const app = http.createServer((req, res) => {
     })
     .catch(err => {
       res.writeHead(400, { 'Content-Type': 'text/plain' });
-      res.write(cowsay({ text: 'Bad Request' }));
+      res.write(cowsay.say({ text: 'Bad Request' }));
       res.end();
       return;
     });
