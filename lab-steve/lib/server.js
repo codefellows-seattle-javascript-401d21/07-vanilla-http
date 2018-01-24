@@ -16,17 +16,23 @@ const app = http.createServer((req, res) => {
       }
 
       if (request.method === 'GET' && request.url.pathname === '/cowsay') {
-        if (!request.url.query.text) {
-          throw new Error();
-        } 
+        if (!request.url.query.text) throw new Error(); 
         res.writeHead(200, {'Content-Type': 'text/plain'});
         res.write(cowsay.say(request.url.query));
         res.end();
         return;
       }
 
+      if (request.method === 'POST' && request.url.pathname === '/cowsay') {
+        if (!request.body) throw new Error();
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.write(cowsay.say(request.body));
+        res.end();
+        return;
+      }
+
       res.writeHead(404, {'Content-Type': 'text/plain'});
-      res.write('Not Found');
+      res.write(cowsay.say({text: 'Not Found'}));
       res.end();
       return;
     })
