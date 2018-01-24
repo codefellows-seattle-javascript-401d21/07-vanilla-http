@@ -14,16 +14,23 @@ const app = http.createServer((req, res) => {
         return;
       }
 
-      if(request.method === 'GET' && request.url.pathname === '/cowsay' && request.url.query.text) {
-        res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.write(cowsay.say(request.url.query));
-        res.end();
+      if(request.method === 'GET' && request.url.pathname === '/cowsay') {
+        if (request.url.query.text) {
+          res.writeHead(200, {'Content-Type': 'text/plain'});
+          res.write(cowsay.say(request.url.query));
+          res.end();
+        }
+        if (!request.url.query.text) {
+          res.writeHead(400, {'Content-Type': 'text/plain'});
+          res.write(cowsay.say({ text: 'bad request' }));
+          res.end();
+        }
         return;
       }
     
-      if(request.method === 'POST' && request.url.pathname === '/cowsay' && request.body){
+      if(request.method === 'POST' && request.url.pathname === '/cowsay'){
         res.writeHead(201, {'Content-Type': 'text/plain'});
-        res.write(cowsay.say(request.body));
+        res.write(JSON.stringify(request.body));
         res.end();
         return;
       }
