@@ -42,9 +42,9 @@ describe('SERVER MODULE', function () {
         });
       });
 
-      it('should respond with a status 400', () => {
+      it('should respond to bad request with a status 400', () => {
         return superagent.get(':4444/cowsay')
-        .set('Content-Type', 'text/plain')
+        // .set('Content-Type', 'text/plain')
         .then(res => {
           expect(res.status).toBe(400);
           expect(res.body.text).toMatch(/bad request/);
@@ -65,14 +65,14 @@ describe('SERVER MODULE', function () {
 
       it('should return correct res text', () => {
         return superagent.post(':4444/cowsay')
-        // .set('Content-Type', 'application/json')
+        .set('Content-Type', 'application/json')
         .send('{"text": "moo"}')
         .then(res => {
           expect(res.text).toMatch(/moo/);
         });
       });
 
-      it('should respond to incorrect text with a status 400', () => {
+      it('should respond to a bad request with a status 400', () => {
         return superagent.post(':4444/cowsay')
         // .set('Content-Type', 'application/json')
         .send('{"text": ""}')
@@ -83,6 +83,24 @@ describe('SERVER MODULE', function () {
       });
 
     }); // describe POST /cowsay
-    
+
+    describe('Incorrect path', () => {
+
+      it('should respond to a bad path with a status 404', () => {
+        return superagent.get(':4444/404')
+        .then(res => {
+          expect(res.status).toBe(404);
+        });
+      });
+
+      it('should output "not found" with a bad path', () => {
+        return superagent.get(':4444/404')
+        .then(res => {
+          expect(res.body.text).toMatch(/not found/);
+        });
+      });
+
+    });
+
   });
 });
