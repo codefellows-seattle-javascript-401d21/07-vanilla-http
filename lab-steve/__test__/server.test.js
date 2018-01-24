@@ -31,15 +31,26 @@ describe('Server module', () => {
       });
     });
 
-    // change to be GET /cowsay
-    // describe('GET /', () => {
-    //   it('should respond with a status 200', () => {
-    //     return superagent.get(':5555/')
-    //       .then(res => {
-    //         expect(res.status).toBe(200);
-    //       });
-    //   });
-    // });
+    describe('GET /cowsay', () => {
+      it('should respond with a status 200', () => {
+        return superagent.get(':5555/')
+          .then(res => {
+            expect(res.status).toBe(200);
+          });
+      });
+
+      it('should ask for something to say if no text is given', () => {
+        return superagent.get(':5555/cowsay')
+          .then(res => {
+            expect(res.text).toMatch(/You need to tell me what to say!/);
+          });
+      });
+
+      it('should display the message the user requests', () => {
+        return superagent.get(':5555/cowsay?text=Yikes!')
+          .then(res => expect(res.text).toMatch(/Yikes!/));
+      })
+    });
 
     // // change to be POST /cowsay
     // describe('GET /', () => {
