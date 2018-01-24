@@ -37,6 +37,7 @@
   "devDependencies": {
     "eslint": "^4.16.0",
     "jest": "^22.1.4",
+    "nodemon": "^1.14.11",
     "superagent": "^3.8.2"
   },
   "dependencies": {
