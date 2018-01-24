@@ -11,6 +11,7 @@ const app = http.createServer((req, res) => {
       let rm = request.method.toLowerCase();
       if (rm !== 'get' && rm !== 'post') return httpResponse.call(errObject);  
       let respObj = routes[rm](request.url.pathname, request.url.query);
+      console,log('respObj', respObj);
       httpResponse.call(respObj);
     })
     .catch(err => {
