@@ -1,32 +1,31 @@
-'use strict'
+'use strict';
 
-const urlParser = require('url')
-const queryString = require('querystring')
+const urlParser = require('url');
+const queryString = require('querystring');
 
-module.exports = function (request) {
+exports.parse = req => {
     return new Promise((resolve, reject) => {
-        request.url = urlParser.parse(request.url)
-        request.url.query = queryString.parse(request.url.query)
+        req.url = urlParser.parse(req.url);
+        req.url.query = queryString.parse(req.url.query);
+        if (req.method !== 'POST' && req.method !== 'PUT') return resolve(req);
 
-        if (request.method !== 'POST' && request.method !== 'PUT') return resolve(request)
+        let msg = '';
 
-        let message = ''
+        req.on('data', data => {
+            msg += data.toString();
+        });
 
-        request.on('data', data => {
-            message += data.toString()
-        })
-
-        request.on('end', () => {
+        req.on('end', () => {
             try {
-                request.body = JSON.parse(message)
-                return resolve(request)
+                req.body = JSON.parse(msg);
+                return resolve(req);
             } catch (err) {
-                return reject(err)
+                return reject(err);
             }
-        })
+        });
 
-        request.on('error', err => {
-            return reject(err)
-        })
-    })
-}
+        req.on('error', err => {
+            return reject(err);
+        });
+    });
+};
