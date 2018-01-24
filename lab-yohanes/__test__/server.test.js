@@ -3,7 +3,7 @@
 const server = require('../lib/server.js')
 const superagent = require('superagent') //a dependency allws to make a request from the http server side
 //creating local server
-describe('Server Module', function () {
+describe('Server module', function () {
   beforeAll(() => server.start(4444))
   afterAll(() => server.stop())
 
@@ -34,6 +34,6 @@ describe('Server Module', function () {
 })
 
 
-server.start(3000, () => console.log(`Listening on Port 3000`))
+// server.start(3000, () => console.log(`Listening on Port 3000`))
 
 //wath 33 minutes into part 3 to //configure packages.json

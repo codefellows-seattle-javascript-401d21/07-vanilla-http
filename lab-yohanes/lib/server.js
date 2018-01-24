@@ -3,12 +3,9 @@
 const http = require('http')
 const bodyParser = require('./body-parser.js')
 //creating a module for our server
-const server = module.exports = {};
-server.start = (port, cb) => app.listen(port, cb)
-server.stop = (callback) => app.close(cb)
 
-const app = http.createServer((request, response) => {
-  bodyParser(request)
+const app = http.createServer((req, res) => {
+  bodyParser(req)
   .then(request => {
     if (request.method === 'GET' && request.url.pathname === '/time') { //creating url path
       res.writeHead(200, {'Content-Type': 'application/json'})
@@ -35,3 +32,7 @@ const app = http.createServer((request, response) => {
       res.end()
     })
 })
+
+const server = module.exports = {};
+// server.start = (port, cb) => app.listen(port, cb)
+// server.stop = (callback) => app.close(cb)
