@@ -16,11 +16,11 @@ const app = http.createServer((req, res) => {
       }
 
       if (request.method === 'GET' && request.url.pathname === '/cowsay') {
-        let say = request.url.query.text
-          ? request.url.query
-          : { text: 'You need to tell me what to say!', T: 'U' };
+        if (!request.url.query.text) {
+          throw new Error();
+        } 
         res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.write(cowsay.say(say));
+        res.write(cowsay.say(request.url.query));
         res.end();
         return;
       }
@@ -32,7 +32,7 @@ const app = http.createServer((req, res) => {
     })
     .catch(() => {
       res.writeHead(400, {'Content-Type': 'text/plain'});
-      res.write('Bad Request');
+      res.write(cowsay.say({text: 'Bad Request'}));
       res.end();
       return;
     });
