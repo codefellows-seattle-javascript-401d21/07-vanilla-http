@@ -37,18 +37,13 @@ describe('SERVER MODULE', function () {
 
       it('should return text', () => {
         return superagent.get(':4444/cowsay?text=Hello world!')
-        // .send({'text': 'Hello World!'})
-        // .set('Content-Type', 'text/plain')
         .then(res => {
-          // console.log(res);
           expect(res.text).toMatch(/Hello world!/);
-          // expect(res.body.text).toBe('Hello world!')
         });
       });
 
       it('should respond with a status 400', () => {
         return superagent.get(':4444/cowsay')
-        // .send({text: 'Hello World!'})
         .set('Content-Type', 'text/plain')
         .then(res => {
           expect(res.status).toBe(400);
@@ -59,6 +54,7 @@ describe('SERVER MODULE', function () {
     }); // describe GET /cowsay
 
     describe('POST /cowsay', () => {
+
       it('should respond with a status 200', () => {
         return superagent.post(':4444/cowsay')
         .send('{"text": "moo"}')
@@ -66,6 +62,7 @@ describe('SERVER MODULE', function () {
           expect(res.status).toBe(200);
         });
       });
+
       it('should return correct res text', () => {
         return superagent.post(':4444/cowsay')
         // .set('Content-Type', 'application/json')
@@ -78,13 +75,14 @@ describe('SERVER MODULE', function () {
       it('should respond to incorrect text with a status 400', () => {
         return superagent.post(':4444/cowsay')
         // .set('Content-Type', 'application/json')
-        .send('{"text": "moo"}')
+        .send('{"text": ""}')
         .then(res => {
-          expect(res.status).toBE(400);
+          expect(res.status).toBe(400);
+          expect(res.body.text).toMatch(/bad request/);
         });
       });
-    });
-  }); // describe valid requests
-});
 
-// describe('Invalid Request to the API', () => {
+    }); // describe POST /cowsay
+    
+  });
+});
