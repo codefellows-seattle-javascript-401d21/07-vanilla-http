@@ -11,10 +11,12 @@ module.exports = function(request) {
     if(request.method !== 'POST' && request.method !== 'PUT') return resolve(request);
 
     let message = '';
-
+    // console.log('line 14', message);
     request.on('data', data => {
+    //   console.log('data.toString',data.toString);
       message += data.toString();
     });
+    // console.log('message',message);
 
     request.on('end', () => {
       try {

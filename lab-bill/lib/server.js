@@ -40,8 +40,8 @@ const app = http.createServer((req,res) => {
         return;
       }
     
-      if(request.method === 'POST' && request.url.pathname === '/echo') {
-        res.writeHead(201, {'Content-Type': 'application/json'});
+      if(request.method === 'POST' && request.url.pathname === '/cowsay') {
+        res.writeHead(201, {'Content-Type': 'text/plain'});
         res.write(JSON.stringify(request.body));
         res.end();
         return;

@@ -25,14 +25,25 @@ describe('server module', function() {
     //       });
     //   });
     // });
-    describe('get /cowsay', () => {
+    // describe('get /cowsay', () => {
+    //   it('should respond with a status of 200', () => {
+    //     return superagent.get(':4444/cowsay?text=thisismymessage')
+    //       .then(res => {
+    //         expect(res.status).toBe(200);
+    //       });
+    //     //.catch()
+    
+    //   });
+    // });
+    describe('post /cowsay', () => {
       it('should respond with a status of 200', () => {
-        return superagent.get(':4444/cowsay?text=thisismymessage')
+        return superagent.post(':4444/cowsay')
+          .send({ name: 'Manny', species: 'cat' })
           .then(res => {
-            expect(res.status).toBe(200);
+            expect(res.status).toBe(201);
           });
         //.catch()
-    
+      
       });
     });
   });
