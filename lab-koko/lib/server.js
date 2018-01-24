@@ -22,10 +22,10 @@ const app = http.createServer((req, res) => {
         res.end();
       }
       if(request.method === 'GET' && request.url.pathname === '/cowsay') {
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        if(request.url.query.text)res.write(cowsay.say({
-          text: `${request.url.query.text}`,
-        }))
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        if (request.url.query.text)res.write(cowsay.say({
+          text : `${request.url.query.text}`,
+        }));
         res.end();
         return;
       }
