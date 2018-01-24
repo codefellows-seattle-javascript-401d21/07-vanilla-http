@@ -1,0 +1,29 @@
+{
+  "name": "lab-kevin",
+  "version": "1.0.0",
+  "description": "Lab 07: Vanilla HTTP Server",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "http",
+    "body-parser",
+    "cowsay",
+    "url",
+    "superagent"
+  ],
+  "author": "Kevin Miller",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.16.0",
+    "jest": "^22.1.4",
+    "superagent": "^3.8.2"
+  },
+  "dependencies": {
+    "cowsay": "^1.2.1"
+  }
+}
