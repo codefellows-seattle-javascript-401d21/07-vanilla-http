@@ -1,0 +1,19 @@
+{
+  "name": "lab07",
+  "version": "1.0.0",
+  "description": "basic http server",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest --verbose",
+    "start": "node server.js"
+  },
+  "author": "rnd",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.16.0",
+    "jest": "^22.1.4"
+  }
+}
