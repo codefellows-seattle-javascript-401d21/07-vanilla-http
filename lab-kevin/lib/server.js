@@ -2,20 +2,29 @@
 
 const http = require('http');
 const body_parser = require('./body_parser');
+const routes = require ('./routes');
+const errObject = {status: 404, content:  {'Content-Type': 'text/plain'} ,body: 'Bad Request'}
 
 const app = http.createServer((req, res) => {
   body_parser(req)
     .then(request => {
-      if(request.method === 'GET'){}
-
-      if(request.url.pathname === '/'){
-        request.writeHead(200, {'Content-Type': 'text/plain'});
-        request.write('Bonjour, mon ami!');
-        return;
-      }
-
-      if()
+      let rm = request.method.toLowerCase();
+      if (rm !== 'get' || rm !== 'post') return httpResponse.call(errObject);
+      let respObj = routes[rm](request.url.pathname, request.query);
+      httpResponse.call(respObj);
+    })
+    .catch(err => {
+      errObject.status = 400;
+      errObject.body = err;
+      httpResponse.call(errObject);
+      return;
     });
+
+  const httpResponse = () => {
+    res.writeHead(this.status, this.content);
+    res.write(this.body);
+    res.end();
+  };
 
 });
 
