@@ -23,20 +23,20 @@ const app = http.createServer((req, res) => {
         return;
       }
       res.writeHead(200, {'Content-Type': 'text/plain'});
-      res.write( cowsay.say({'text': request.url.query.text}) );
+      res.write( cowsay.say({'text': `${request.url.query.text}`}) );
       res.end();
       return;
     }
 
     if (request.method === 'POST' && request.url.pathname === '/cowsay') {
-      if (!request.body) { // .text???
+      if (!request.body.text) { // .text???
         res.writeHead(400, {'Content-Type': 'text/plain'});
-        res.write( cowsay.say({text: 'bad request'}) );
+        res.write( cowsay.say({'text': 'bad request'}) );
         res.end();
         return;
       }
       res.writeHead(200, {'Content-Type': 'text/plain'});
-      res.write( cowsay.say({text: (request.body) })); // JSON.stringify???
+      res.write( cowsay.say({'text': `${request.body}` })); // JSON.stringify???
       res.end();
       return;
     }
