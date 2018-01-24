@@ -79,11 +79,43 @@ describe('Server Module', function() {
       it('should return a status 200', () => {
         return superagent.post(':4444/cowsay?text=howdy')
           .send({text: 'howdy'})
-            .then(response => {
-              expect(response).toBe({text: 'howdy'});
-            })
-      })
-    })
-  })
-  })
+          .then(response => {
+            expect(response.status).toBe(201);
+          });
+      });
+      it('should respond with an object', () => {
+        return superagent.post(':4444/cowsay?text=hello')
+          .send({'text': 'hello'})
+          .then(response => {
+            expect(response.text).toBe('{"text":"hello"}');
+          });
+      });
+      it('should respond with a cowsway message', () => {
+        return superagent.post(':4444/cowsay?text=it posted')
+          .send({text: 'it posted'})
+          .then(response => {
+            expect(cowsay.say({text: 'it posted'})).toBe(cowsay.say({text: 'it posted'}));
+            console.log(cowsay.say({text: 'it posted'}));
+          });
+      });
+    });
+    describe('Invalid posts', () => {
+      it('should respond with a status 400', () => {
+        return superagent.post(':4444/cosway?text=')
+          .then(response => {
+          })
+          .catch(err => {
+            expect(err.status).toBe(400);
+          });
+      });
+      it('should respond with an object', () => {
+        return superagent.post(':4444/cosway?text=')
+          .then(response => {
+          })
+          .catch(err => {
+            expect(err).toBeInstanceOf(Object);
+          });
+      });
+    });
+  });
 });
