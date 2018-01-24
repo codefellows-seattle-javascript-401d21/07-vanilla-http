@@ -30,8 +30,9 @@ const app = http.createServer((req,res) => {
       }
     
       if(request.method === 'POST' && request.url.pathname === '/cowsay') {
+        console.log(request.body);
         res.writeHead(201, {'Content-Type': 'text/plain'});
-        res.write(JSON.stringify(request.body));
+        res.write(cowsay.say(request.body));
         res.end();
         return;
       }
@@ -48,7 +49,7 @@ const app = http.createServer((req,res) => {
       return;
     })
     .catch(err => {
-      console.log(res.head);
+    //   console.log(res.head);
       res.writeHead(400, {'Content-Type': 'text/plain'});
       res.write(cowsay.say({ text: 'bad request' }));
       res.end();
