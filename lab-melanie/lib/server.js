@@ -9,18 +9,23 @@ const app = http.createServer((request, response) => {
     .then(req => {
       if(req.method === 'GET' && req.url.pathname === '/') {
         response.writeHead(200, {'Content-Type': 'application/json'});
-        response.write(JSON.stringify({
-          message: 'hello from my server!',
-        }));
+        response.write(JSON.stringify('hello from my server!'));
         response.end();
         return;
       }
       if(req.method === 'GET' && req.url.pathname === '/cowsay') {
-        console.log(req.url.query);
-        if(req.url.query) {
+        if(req.url.query.text) {
           response.writeHead(200, {'Content-Type': 'text/plain'});
           response.write(cowsay.say({
-            text: req.url.query,
+            text: req.url.query.text,
+          }));
+          response.end();
+          return;
+        }
+        if(!req.url.query.text) {
+          response.writeHead(400, {'Content-Type': 'text/plain'});
+          response.write(cowsay.say({
+            text: 'Bad Request',
           }));
           response.end();
           return;
@@ -35,9 +40,9 @@ const app = http.createServer((request, response) => {
         return;
       }
 
-      response.writeHead(404, {'Content-Type': 'text/plain'});
+      response.writeHead(400, {'Content-Type': 'text/plain'});
       response.write(cowsay.say({
-        text: 'Not Found',
+        text: 'Bad Request',
       }));
       response.end();
       return;
