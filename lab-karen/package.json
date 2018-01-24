@@ -1,0 +1,39 @@
+{
+  "name": "lab-karen",
+  "version": "1.0.0",
+  "description": "### Description This lab creates an HTTP Server using the NodeJS http module.  It uses a custom body parsing module for parsing the body of all POST and PUT requests.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest",
+    "start": "node index.js",
+    "start:watch": "nodemon index.js"
+  },
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "coverageDirectory": "./coverage",
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
+  },
+  "keywords": [],
+  "author": "Karen Perez",
+  "license": "MIT",
+  "dependencies": {
+    "cowsay": "^1.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.16.0",
+    "jest": "^22.1.4",
+    "superagent": "^3.8.2"
+  }
+}
