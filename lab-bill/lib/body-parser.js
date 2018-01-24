@@ -13,7 +13,6 @@ module.exports = function(request) {
     let message = '';
 
     request.on('data', data => {
-      console.log(data.toString());
       message += data.toString();
     });
 

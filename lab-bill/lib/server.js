@@ -2,6 +2,7 @@
 
 const http = require('http');
 const bodyParser = require('./body-parser');
+const cowsay = require('cowsay');
 
 const app = http.createServer((req,res) => {
   bodyParser(req)
@@ -22,11 +23,23 @@ const app = http.createServer((req,res) => {
         return;
       }
       if(request.method === 'GET' && request.url.pathname === '/cowsay') {
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        res.write('hello from my server!');
-        res.end();
+        console.log(request.url);
+        console.log(request.url.query.text);
+        console.log(!request.url.query.text);
+        if(request.url.query.text) {
+          res.writeHead(200, {'Content-Type': 'text/plain'});
+          res.write(cowsay.say({ text: `${request.url.query.text}` }));
+          res.end();
+        }
+      
+        if(!request.url.query.text){
+          res.writeHead(400, {'Content-Type': 'text/plain'});
+          res.write(cowsay.say({ text: 'bad request' }));
+          res.end();
+        }
         return;
       }
+    
       if(request.method === 'POST' && request.url.pathname === '/echo') {
         res.writeHead(201, {'Content-Type': 'application/json'});
         res.write(JSON.stringify(request.body));
