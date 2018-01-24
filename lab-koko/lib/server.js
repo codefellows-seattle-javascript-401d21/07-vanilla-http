@@ -2,6 +2,7 @@
 
 const http = require('http');
 const bodyParser = require('./body-parse');
+const cowsay = require('cowsay');
 
 const app = http.createServer((req, res) => {
   bodyParser(req)
@@ -15,7 +16,20 @@ const app = http.createServer((req, res) => {
         res.end();
         return;
       }
-      if(request.methid === 'POST' && request.url.pathname === '/echo') {
+      if (request.method === 'GET' && request.url.pathname === '/') {
+        res.writeHead(200,{'Content-Type': 'text/plain'});
+        res.write('Hello from my server!');
+        res.end();
+      }
+      if(request.method === 'GET' && request.url.pathname === '/cowsay') {
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        if(request.url.query.text)res.write(cowsay.say({
+          text: `${request.url.query.text}`,
+        }))
+        res.end();
+        return;
+      }
+      if(request.method === 'POST' && request.url.pathname === '/echo') {
         res.writeHead(201, {'Content-Type': 'application/json'});
         res.write(JSON.stringify(request.body));
         res.end();
@@ -35,4 +49,4 @@ const app = http.createServer((req, res) => {
 });
 const server = module.exports = {};
 server.start = (port,cb) => app.listen(port, cb);
-server.stop = (cb) => app.close;
+server.stop = (cb) => app.close(cb);
