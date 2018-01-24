@@ -14,8 +14,6 @@ const app = http.createServer((req,res) => {
         return;
       }
       if(request.method === 'GET' && request.url.pathname === '/cowsay') {
-        console.log(request.url);
-        console.log(!request.url.query.text);
         if(request.url.query.text) {
           res.writeHead(200, {'Content-Type': 'text/plain'});
           res.write(cowsay.say({ text: `${request.url.query.text}` }));
