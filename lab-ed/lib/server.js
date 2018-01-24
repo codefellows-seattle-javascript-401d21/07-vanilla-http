@@ -20,7 +20,8 @@ const app = http.createServer((req, res) => {
       if(request.method === 'GET' && request.url.pathname === '/cowsay') {
         res.writeHead(200, {'Content-Type': 'application/json'})
         res.write(JSON.stringify({
-          cow: Date.now(),
+          cow: cowsay.say({ text: 'mooo',
+          }),
         }))
         res.end()
         return
