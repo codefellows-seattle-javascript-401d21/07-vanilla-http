@@ -5,23 +5,28 @@ const bodyParser = require('./body-parse')
 const cowsay = require('cowsay')
 
 const app = http.createServer((req, res) => {
+
   bodyParser(req)
     .then(request => {
-      if(request.method === 'GET' && request.url.pathname === '/time') {
-        res.writeHead(200, {'Content-Type': 'application/json'})
-        res.write(JSON.stringify({
-          now: Date.now(),
-          date: new Date(),
-        }))
+      
+      if(request.method === 'GET' && request.url.pathname === '/cowsay') {
+        if(request.url.query.text) {
+          res.writeHead(200, {'Content-Type': 'text/plain'})
+          res.write(cowsay.say({ text: `${request.url.query.text}`,
+          }))
+          res.end()
+          return
+        }
+        res.writeHead(400, {'Content-Type': 'text/plain'})
+        res.write('Bad request')
         res.end()
         return
       }
 
-      if(request.method === 'GET' && request.url.pathname === '/cowsay') {
-        res.writeHead(200, {'Content-Type': 'application/json'})
-        res.write(cowsay.say({ text: 'mooo',
-          }),
-        )
+      if(request.method === 'POST' && request.url.pathname === '/cowsay') {
+        res.writeHead(200, {'Content-Type': 'text/plain'})
+        res.write(cowsay.say({ text: `${request.url.query.text}`,
+        }))
         res.end()
         return
       }

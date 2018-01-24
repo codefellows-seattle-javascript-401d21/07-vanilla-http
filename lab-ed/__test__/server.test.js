@@ -8,29 +8,38 @@ describe('Server module', function() {
   afterAll(() => server.stop())
 
   describe('Valid Request to the API', () => {
-    describe('GET /time', () => {
+    describe('GET /cowsay', () => {
       it('should respond with a status 200', () => {
-        return superagent.get(':4444/time')
+        return superagent.get(':4444/cowsay?text=mooo')
           .then(res => {
             expect(res.status).toBe(200)
           })
       })
-      it('should return a date/time object', () => {
-        return superagent.get(':4444/time')
-          .then(res => {
-            console.log(res.body)
-            expect(res.body).toHaveProperty('now')
-            expect(res.body).toBeInstanceOf(Object)
-          })
-      })
       it('should return a talking cow', () => {
-        return superagent.get(':4444/cowsay')
+        return superagent.get(':4444/cowsay?text=mooo')
           .then(res => {
-            console.log(res.body)
-            expect(res.body).toHaveProperty('cow')
-            expect(res.body).toBeInstanceOf(Object)
+            console.log(res.text)
+            expect(res.text).toMatch('mooo')
           })
       })
     })
-  })
+
+    describe('POST /cowsay', () => {
+      it('should respond with a status 200', () => {
+        return superagent.get(':4444/cowsay?text=mooo')
+          .then(res => {
+            expect(res.status).toBe(200)
+          })
+      })
+      it('should return a talking cow', () => {
+        return superagent.get(':4444/cowsay?text=mooo')
+          .then(res => {
+            console.log(res.text)
+            expect(res.text).toMatch('mooo')
+          })
+      })
+    })
+    
+  }) 
+  
 })
