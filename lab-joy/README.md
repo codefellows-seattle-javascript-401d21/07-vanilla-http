@@ -1,5 +1,5 @@
 # Lab 07 - Vanilla HTTP Server
-Joy Hou, Jan 23, 2018
+Joy Hou, Jan 23, 2018 
 
 ## Description
 I am creating a vanilla HTTP server in Node.js that accepts and responds to requests.
