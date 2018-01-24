@@ -21,10 +21,10 @@ const app = http.createServer((req, res) => {
         return;
       }
       if(request.method === 'POST' && request.url.pathname ==='/cowsay') {
+
         if(!request.body.text) {
           res.writeHead(400, {'Content-Type': 'text/plain'});
           res.write(cowsay.say({text: 'Bad Request'}));
-          console.log('inside server responce',res);
           res.end();
           return;
         }

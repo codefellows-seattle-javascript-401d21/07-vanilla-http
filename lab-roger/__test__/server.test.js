@@ -94,7 +94,8 @@ describe('server module', function() {
     describe('POST /cowsay', () => {
 
       it('should respond with a status 400', (done) => {
-        return superagent.get(':4444/cowsay?text=')
+        return superagent.post(':4444/cowsay')
+          .send({txt: ''})
           .catch(res => {
             expect(res.status).toBe(400);
             expect(res.response.text).toEqual(cowsay.say({text: 'Bad Request'}));

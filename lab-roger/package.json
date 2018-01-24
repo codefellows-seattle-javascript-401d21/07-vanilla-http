@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "jest --verbose",
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "jest": {
     "verbose": true,
