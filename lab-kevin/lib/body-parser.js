@@ -7,25 +7,19 @@ module.exports = function(request){
   return new Promise((resolve, reject) => {
     request.url = url_parser(request.url);
     request.url.query = queryStr_parser(request.url.query);
-
-    if (request.method === 'GET') return resolve(request);
-
+    
     let mesg = '';
-
     request.on('data', data => data += data.toString);
-
     request.on('end', () => {
-      try{
-        request.body = JSON.parse(mesg)
+      try {
+        if(mesg) request.body = JSON.parse(mesg);
         return resolve(request);
       }
       catch(e) {
         return reject(e);
       }
     });
-
     request.on('error', err => reject(err));
-
   });
 
 };
