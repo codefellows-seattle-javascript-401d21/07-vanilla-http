@@ -6,7 +6,7 @@ const queryString = require('querystring');
 module.exports = function(request) {
   return new Promise((resolve, reject) => {
     request.url = urlParser.parse(request.url);
-    request.url.quesy = queryString.parse(request.url.query);
+    request.url.query = queryString.parse(request.url.query);
 
     if(request.method !== 'POST' && request.method !== 'PUT') return resolve(request);
 
