@@ -24,7 +24,7 @@ module.exports = function(request) {
         request.body = JSON.parse(message);
         return resolve(request);
       } catch(err) {
-         console.log('reject(err)',err);
+        //  console.log('reject(err)',err);
         return reject(err);
       }
     });

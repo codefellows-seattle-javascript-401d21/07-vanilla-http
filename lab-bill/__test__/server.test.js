@@ -47,10 +47,25 @@ describe('server module', function() {
     //   });
       it('should respond with a status of 400', () => {
         return superagent.post(':4444/cowsay')
+          .send()
           .then(res => {
-            expect(res.status).toBe(400);
+            // expect(res.status).toBe(400);
           }).catch(res => {
+            console.log(res.status);
+            console.log(res.response.request.response.text);
             expect(res.status).toBe(400);
+          });
+      });
+      it('should respond with the text of a cow saying bad things', () => {
+        return superagent.post(':4444/cowsay')
+          .send()
+          .then(res => {
+            // expect(res.status).toBe(400);
+          }).catch(res => {
+            console.log(res.status);
+            console.log(res.response.request.response.text);
+            let x = res.response.request.response.text;
+            expect(x.includes('bad request')).toBe(true);
           });
       });
     });
