@@ -7,12 +7,13 @@ module.exports = function(request) {
   return new Promise((resolve, reject) => {
     request.url = urlParser.parse(request.url);
     request.url.query = queryString.parse(request.url.query);
-
+    
     if(request.method !== 'POST' && request.method !== 'PUT') return resolve(request);
 
     let message = '';
 
     request.on('data', data => {
+      console.log(data.toString());
       message += data.toString();
     });
 

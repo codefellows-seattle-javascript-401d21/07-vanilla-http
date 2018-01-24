@@ -8,20 +8,20 @@ describe('server module', function() {
   afterAll(() => server.stop());
 
   describe('Valid Request to the Api', () => {
-    describe('GET /time', () => {
+    describe('GET /', () => {
       it('should respond with a status of 200', () => {
-        return superagent.get(':4444/time')
+        return superagent.get(':4444/')
           .then(res => {
             expect(res.status).toBe(200);
           });
         //.catch()
 
       });
-      it('should return a date/time object', () => {
-        return superagent.get(':4444/time')
+      it('should return hello from my server', () => {
+        return superagent.get(':4444/')
           .then( res => {
-            expect(res.body).toHaveProperty('now');
-            expect(res.body).toBeInstanceOf(Object);
+            expect(res.text).toBe('hello from my server!');
+            //   expect(res.body).toBeInstanceOf(Object);
           });
       });
     });

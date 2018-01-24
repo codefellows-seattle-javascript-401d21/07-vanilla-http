@@ -6,12 +6,24 @@ const bodyParser = require('./body-parser');
 const app = http.createServer((req,res) => {
   bodyParser(req)
     .then(request => {
-      if(request.method === 'GET' && request.url.pathname === '/time') {
+    //   if(request.method === 'GET' && request.url.pathname === '/time') {
+    //     res.writeHead(200, {'Content-Type': 'application/json'});
+    //     res.write(JSON.stringify({
+    //       now: Date.now(),
+    //       date: new Date(),
+    //     }));
+    //     res.end();
+    //     return;
+    //   }
+      if(request.method === 'GET' && request.url.pathname === '/') {
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.write('hello from my server!');
+        res.end();
+        return;
+      }
+      if(request.method === 'GET' && request.url.pathname === '/cowsay') {
         res.writeHead(200, {'Content-Type': 'application/json'});
-        res.write(JSON.stringify({
-          now: Date.now(),
-          date: new Date(),
-        }));
+        res.write('hello from my server!');
         res.end();
         return;
       }
