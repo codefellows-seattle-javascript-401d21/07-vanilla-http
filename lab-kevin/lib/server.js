@@ -19,7 +19,6 @@ const app = http.createServer((req, res) => {
       errObject.status = 400;
       errObject.body = err;
       httpResponse.call(errObject);
-      return;
     });
 
   function httpResponse(){

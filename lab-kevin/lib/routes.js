@@ -10,7 +10,7 @@ const postArray = [['/cowsay', cowsayResp]];
 const postMap = new Map(postArray);
 
 const respObject = {};
-const errObject = {status: 404, content:  {'Content-Type': 'text/plain'} ,body: 'Bad Request'};
+const errObject = {status: 404, content:  {'Content-Type': 'text/plain'}, body: 'Bad Request'};
 
 routes.get = (path, qStr) => {
   let path_handler = getMap.get(path);
@@ -33,13 +33,15 @@ function home(){
 
 function cowsayResp(qStr){
   let statusCode = 200;
-  let msg = qStr ? qStr.text : 'bad request';
-  if (msg === 'bad request' ) statusCode = 400;
+  if(!qStr) qStr = {};
+  let msg = qStr.text ? qStr.text : 'Bad Request';
+  if (msg === 'Bad Request' ) statusCode = 400;
   let cowSayText = cowsay.say({ text: msg });
   respObject.content = {'Content-Type': 'text/plain'};
   respObject.body = cowSayText;
   respObject.status = statusCode;
   return respObject;
 }
+
   
 
