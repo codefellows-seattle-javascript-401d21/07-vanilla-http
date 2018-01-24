@@ -1,0 +1,22 @@
+{
+  "name": "vanilla",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest",
+    "start": "node index.js",
+    "start:watch": "nodemon index.js"
+  },
+  "author": "Hector Norza",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^22.1.4"
+  },
+  "dependencies": {
+    "cowsay": "^1.2.1"
+  }
+}
