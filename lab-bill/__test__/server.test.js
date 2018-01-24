@@ -36,14 +36,22 @@ describe('server module', function() {
     //   });
     // });
     describe('post /cowsay', () => {
-      it('should respond with a status of 200', () => {
-        return superagent.post(':4444/cowsay')
-          .send({ name: 'Manny', species: 'cat' })
-          .then(res => {
-            expect(res.status).toBe(201);
-          });
-        //.catch()
+    //   it('should respond with a status of 200', () => {
+    //     return superagent.post(':4444/cowsay')
+    //       .send({ name: 'Manny', species: 'cat' })
+    //       .then(res => {
+    //         expect(res.status).toBe(201);
+    //       });
+    //     //.catch()
       
+    //   });
+      it('should respond with a status of 400', () => {
+        return superagent.post(':4444/cowsay')
+          .then(res => {
+            expect(res.status).toBe(400);
+          }).catch(res => {
+            expect(res.status).toBe(400);
+          });
       });
     });
   });

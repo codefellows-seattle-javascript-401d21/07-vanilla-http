@@ -6,16 +6,8 @@ const cowsay = require('cowsay');
 
 const app = http.createServer((req,res) => {
   bodyParser(req)
-    .then(request => {
-    //   if(request.method === 'GET' && request.url.pathname === '/time') {
-    //     res.writeHead(200, {'Content-Type': 'application/json'});
-    //     res.write(JSON.stringify({
-    //       now: Date.now(),
-    //       date: new Date(),
-    //     }));
-    //     res.end();
-    //     return;
-    //   }
+    .then((request) => {
+    //   console.log('reject',reject);
       if(request.method === 'GET' && request.url.pathname === '/') {
         res.writeHead(200, {'Content-Type': 'text/plain'});
         res.write('hello from my server!');
@@ -23,9 +15,6 @@ const app = http.createServer((req,res) => {
         return;
       }
       if(request.method === 'GET' && request.url.pathname === '/cowsay') {
-        console.log(request.url);
-        console.log(request.url.query.text);
-        console.log(!request.url.query.text);
         if(request.url.query.text) {
           res.writeHead(200, {'Content-Type': 'text/plain'});
           res.write(cowsay.say({ text: `${request.url.query.text}` }));
@@ -46,8 +35,23 @@ const app = http.createServer((req,res) => {
         res.end();
         return;
       }
+      // if(reject) {
+      //   console.log(err);
+      //   res.writeHead(400, {'Content-Type': 'text/plain'});
+      //   res.write(cowsay.say({ text: 'bad request' }));
+      //   res.end();
+      //   return;
+      // }
       res.writeHead(404, {'Content-Type': 'text/plain'});
       res.write('Not Found');
+      res.end();
+      return;
+    })
+    .catch(err => {
+    //   console.log(err);
+      console.log(err);
+    //   err.writeHead(400, {'Content-Type': 'text/plain'});
+    //   err.write(cowsay.say({ text: 'bad request' }));
       res.end();
       return;
     });

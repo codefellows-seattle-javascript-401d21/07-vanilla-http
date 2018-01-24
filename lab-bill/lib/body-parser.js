@@ -20,9 +20,11 @@ module.exports = function(request) {
 
     request.on('end', () => {
       try {
+        // console.log('hello');
         request.body = JSON.parse(message);
         return resolve(request);
       } catch(err) {
+         console.log('reject(err)',err);
         return reject(err);
       }
     });
