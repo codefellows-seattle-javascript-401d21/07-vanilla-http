@@ -59,15 +59,31 @@ describe('SERVER MODULE', function () {
     }); // describe GET /cowsay
 
     describe('POST /cowsay', () => {
-
       it('should respond with a status 200', () => {
         return superagent.post(':4444/cowsay')
         .send('{"text": "moo"}')
         .then(res => {
           expect(res.status).toBe(200);
-        })
-      })
-    })
+        });
+      });
+      it('should return correct res text', () => {
+        return superagent.post(':4444/cowsay')
+        // .set('Content-Type', 'application/json')
+        .send('{"text": "moo"}')
+        .then(res => {
+          expect(res.text).toMatch(/moo/);
+        });
+      });
+
+      it('should respond to incorrect text with a status 400', () => {
+        return superagent.post(':4444/cowsay')
+        // .set('Content-Type', 'application/json')
+        .send('{"text": "moo"}')
+        .then(res => {
+          expect(res.status).toBE(400);
+        });
+      });
+    });
   }); // describe valid requests
 });
 

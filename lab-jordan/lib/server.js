@@ -36,7 +36,7 @@ const app = http.createServer((req, res) => {
         return;
       }
       res.writeHead(200, {'Content-Type': 'text/plain'});
-      res.write( cowsay.say({'text': `${request.body}` })); // JSON.stringify???
+      res.write( cowsay.say({'text': `${request.body.text}`})); // JSON.stringify???
       res.end();
       return;
     }
