@@ -27,6 +27,7 @@
     "jest": "^22.1.4"
   },
   "dependencies": {
+    "cowsay": "^1.2.1",
     "superagent": "^3.8.2"
   }
 }
