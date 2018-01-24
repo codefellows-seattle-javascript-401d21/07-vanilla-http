@@ -8,7 +8,7 @@ module.exports = function(req) {
     req.url = urlParser.parse(req.url)
     req.url.query = queryString.parse(req.url.query)
 
-    if(req.method !== 'POST' && req.method !== 'PUT')  return resolve(req)
+    if(req.method !== 'PUT')  return resolve(req)
     let message
     req.on('data', data => {
       message += data.toString()
