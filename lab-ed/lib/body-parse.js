@@ -6,9 +6,9 @@ const queryString = require('querystring')
 module.exports = function(req) {
   return new Promise((resolve, reject) => {
     req.url = urlParser.parse(req.url)
-    req.url.query = queryString.pars(req.url.query)
+    req.url.query = queryString.parse(req.url.query)
 
-    if(req.method !== 'POST' && req.method !== 'PYT')  return resolve(req)
+    if(req.method !== 'POST' && req.method !== 'PUT')  return resolve(req)
     let message
     req.on('data', data => {
       message += data.toString()

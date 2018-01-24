@@ -2,6 +2,7 @@
 
 const http = require('http')
 const bodyParser = require('./body-parse')
+const cowsay = require('cowsay')
 
 const app = http.createServer((req, res) => {
   bodyParser(req)
@@ -16,9 +17,11 @@ const app = http.createServer((req, res) => {
         return
       }
 
-      if(request.method === 'POST' && request.url.pathname === 'echo') {
+      if(request.method === 'GET' && request.url.pathname === '/cowsay') {
         res.writeHead(200, {'Content-Type': 'application/json'})
-        res.write(JSON.stringify(request.body))
+        res.write(JSON.stringify({
+          cow: Date.now(),
+        }))
         res.end()
         return
       }
@@ -32,6 +35,7 @@ const app = http.createServer((req, res) => {
       res.writeHead(400, { 'Content-Type': 'text/plain' })
       res.write('Bad Request')
       res.end()
+      return
     })
 })
 
