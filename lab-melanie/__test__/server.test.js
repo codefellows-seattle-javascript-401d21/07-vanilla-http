@@ -49,24 +49,18 @@ describe('Server Module', function() {
     describe('Get /cosway', () => {
       it('should respond with a status 400', () => {
         return superagent.get(':4444/cosway?text=')
-          .then(response => {
-          })
           .catch(err => {
             expect(err.status).toBe(400);
           });
       });
       it('should respond with an object', () => {
         return superagent.get(':4444/cosway?text=')
-          .then(response => {
-          })
           .catch(err => {
             expect(err).toBeInstanceOf(Object);
           });
       });
       it('should respond with a cowsay message', () => {
         return superagent.get(':4444/cosway?text=')
-          .then(response => {
-          })
           .catch(err => {
             expect(err.response.text).toBe(cowsay.say({text: 'Bad Request'}));
             console.log(err.response.text);
@@ -94,7 +88,7 @@ describe('Server Module', function() {
         return superagent.post(':4444/cowsay?text=it posted')
           .send({text: 'it posted'})
           .then(response => {
-            expect(cowsay.say({text: 'it posted'})).toBe(cowsay.say({text: 'it posted'}));
+            expect(response.body).toEqual({text: 'it posted'});
             console.log(cowsay.say({text: 'it posted'}));
           });
       });
@@ -102,16 +96,12 @@ describe('Server Module', function() {
     describe('Invalid posts', () => {
       it('should respond with a status 400', () => {
         return superagent.post(':4444/cosway?text=')
-          .then(response => {
-          })
           .catch(err => {
             expect(err.status).toBe(400);
           });
       });
       it('should respond with an object', () => {
         return superagent.post(':4444/cosway?text=')
-          .then(response => {
-          })
           .catch(err => {
             expect(err).toBeInstanceOf(Object);
           });

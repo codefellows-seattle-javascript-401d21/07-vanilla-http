@@ -48,6 +48,7 @@ const app = http.createServer((request, response) => {
       return;
     })
     .catch(err => {
+      console.log(err);
       response.writeHead(400, {'Content-Type': 'text/plain'});
       response.write(cowsay.say({
         text: 'Bad Request',
