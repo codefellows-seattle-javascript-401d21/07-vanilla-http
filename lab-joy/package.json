@@ -8,7 +8,9 @@
   },
   "scripts": {
     "test": "jest --verbose --coverage",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "start:watch": "nodemon index.js",
+    "start:debug": "DEBUG=http* nodemon index.js"
   },
   "author": "Joy Hou",
   "license": "MIT",
