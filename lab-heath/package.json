@@ -1,0 +1,39 @@
+{
+  "name": "lab-heath",
+  "version": "1.0.0",
+  "description": "### Installing and How to use.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "superagent": "^3.8.2"
+  },
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "coverageDirectory": "./coverage",
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
+  },
+  "devDependencies": {
+    "cowsay": "^1.2.1",
+    "eslint": "^4.16.0",
+    "jest": "^22.1.4"
+  },
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint",
+    "start": "node index.js",
+    "start:watch": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
