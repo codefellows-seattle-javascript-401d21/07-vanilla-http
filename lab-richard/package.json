@@ -1,0 +1,24 @@
+{
+  "name": "lab-richard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest --verbose",
+    "lint": "eslint .",
+    "start": "server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^4.16.0",
+    "eslint-plugin-react": "^7.5.1"
+  },
+  "dependencies": {
+    "cowsay": "^1.2.1",
+    "jest": "^22.1.4"
+  }
+}
