@@ -7,7 +7,7 @@ describe('Server module', function() {
   beforeAll(() => server.start(4444))
   afterAll(() => server.stop())
 
-  describe('Valid Request to the API', () => {
+  describe('GET Request to the API', () => {
     describe('GET /cowsay', () => {
       it('should respond with a status 200', () => {
         return superagent.get(':4444/cowsay?text=mooo')
@@ -29,12 +29,29 @@ describe('Server module', function() {
           })
       })
     })
+  })
 
+  describe('POST Request to the API', () => {
     describe('POST /cowsay', () => {
+
       it('should respond with a status 200', () => {
         return superagent.post(':4444/cowsay')
+          .send({text: 'To moo or not to moo'})
           .then(res => {
             expect(res.status).toBe(200)
+          })
+      })
+      it('should return a talking cow', () => {
+        return superagent.post(':4444/cowsay')
+          .send({text: 'To moo or not to moo'})
+          .then(res => {
+            console.log(res.text)
+          })
+      })
+      it('should return bad request if there is an error', () => {
+        return superagent.post(':4444/cowsay')
+          .catch(err => {
+            expect(err.response.text).toMatch('bad cow')
           })
       })
     })
