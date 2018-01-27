@@ -1,0 +1,25 @@
+{
+  "name": "07-http-server",
+  "version": "1.0.0",
+  "description": "HTTP Server",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest --verbose --coverage",
+    "lint": "eslint .",
+    "start:watch": "nodemon index.js",
+    "start:debug": "DEBUG=http* nodemon index.js"
+  },
+  "author": "Joy Hou",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.16.0",
+    "jest": "^22.1.4"
+  },
+  "dependencies": {
+    "cowsay": "^1.2.1",
+    "superagent": "^3.8.2"
+  }
+}
