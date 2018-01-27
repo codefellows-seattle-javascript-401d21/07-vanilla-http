@@ -3,28 +3,28 @@
 const urlParser = require('url')
 const queryString = require('querystring')
 
-module.exports = function(req) {
+module.exports = function(request) {
   return new Promise((resolve, reject) => {
-    req.url = urlParser.parse(req.url)
-    req.url.query = queryString.parse(req.url.query)
+    request.url = urlParser.parse(request.url)
+    request.url.query = queryString.parse(request.url.query)
 
-    if(req.method !== 'PUT')  return resolve(req)
-    let message
-    req.on('data', data => {
+    if(request.method !== 'POST' && request.method !== 'PUT')  return resolve(request)
+    let message = ''
+    request.on('data', data => {
       message += data.toString()
     })
 
-    req.on('end', () => {
+    request.on('end', () => {
       try {
-        req.body = JSON.parse(message)
-        return resolve(req)
-      } catch(error) {
-        return reject(error)
+        request.body = JSON.parse(message)
+        return resolve(request)
+      } catch(err) {
+        return reject(err)
       }
     })
 
-    req.on('error', error => {
-      return reject(error)
+    request.on('error', err => {
+      return reject(err)
     })
   })
 }
