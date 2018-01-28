@@ -1,0 +1,29 @@
+{
+  "name": "07-vanilla-http",
+  "version": "1.0.0",
+  "description": "This is an assignment for cf-401 Lab 07: Vanilla HTTP Server",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "start": "nodemon index.js",
+    "test": "jest --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sobacha/07-vanilla-http.git"
+  },
+  "keywords": [],
+  "author": "Rima",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sobacha/07-vanilla-http/issues"
+  },
+  "homepage": "https://github.com/Sobacha/07-vanilla-http#readme",
+  "dependencies": {
+    "cowsay": "^1.2.1",
+    "eslint": "^4.16.0",
+    "jest": "^22.1.4",
+    "nodemon": "^1.14.11",
+    "superagent": "^3.8.2"
+  }
+}
