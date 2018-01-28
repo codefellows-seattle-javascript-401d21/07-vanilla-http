@@ -42,6 +42,24 @@ describe('Server module', () => {
       });
     });
 
+    describe('POST /cowsay', () => {
+      it('should respond with a 200 status on success', () => {
+        return superagent.post(':6666/cowsay')
+          .send({text: 'Amazing!'})
+          .then(res => expect(res.status).toBe(200));
+      });
+
+      it('should respond with the cowsay response', () => {
+        return superagent.post(':6666/cowsay')
+          .send({text: 'Moo Moo Cow!!!'})
+          .then(res => expect(res.text).toMatch(/Moo Moo Cow!!!/));
+      });
+
+      it('should respond with bad request when no data exists', () => {
+        return superagent.post(':6666/cowsay')
+          .catch(err => expect(err.response.text).toMatch(/Bad Request/));
+      });
+    });
 
   });
 });
