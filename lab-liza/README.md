@@ -7,18 +7,14 @@ This app is an implementation of an HTTP server using the node.js http module.
 
 ## Getting Started
 The user must:
+
 -Npm init their project
 -Install Jest
 -Install Cowsay
+-Run Nodemon
 -To run test the user can enter 'npm test'
--To run individual tests on each method the user can use the following examples:
+-To print a message the user can add a route into their browser with a query string ending in /cowsay?text=<your-text>
 
-**Examples:**
-
-
-```javascript
-
-```
 ## Architecture
 Javascript
 Node
