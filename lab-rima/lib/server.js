@@ -31,7 +31,7 @@ const app = http.createServer((req, res) => {
 
       if(request.method === 'POST' && request.url.pathname === '/cowsay') {
         if(request.body.hasOwnProperty('text')){
-          res.writeHead(200, {'Content-Type': 'text/plain'});
+          res.writeHead(201, {'Content-Type': 'text/plain'});
           res.write(cowsay.say({ text: request.body.text }));
           res.end();
           return;
@@ -48,8 +48,7 @@ const app = http.createServer((req, res) => {
       res.end();
       return;
     })
-    .catch(err => {
-console.log(err);
+    .catch(() => {
       res.writeHead(400, { 'Content-Type': 'text/plain' });
       res.write('Bad Request');
       res.end();

@@ -3,15 +3,15 @@
 const urlParser = require('url');
 const queryString = require('querystring');
 
-// print out attribute of request
-function log(r){
+// helper function for testing
+/*function log(r){
   console.log('url '+r.url);
   console.log('pathname '+urlParser.parse(r.url).pathname);
   console.log('path '+urlParser.parse(r.url).path);
   console.log('query text '); console.log(queryString.parse(urlParser.parse(r.url).query));
-//  console.log('path '); console.log((queryString.parse(urlParser.parse(r.url).query)).hasOwnProperty('text'));
+  console.log('path '); console.log((queryString.parse(urlParser.parse(r.url).query)).hasOwnProperty('text'));
 }
-
+*/
 module.exports = function(request){
 
 //log(request);
@@ -19,8 +19,6 @@ module.exports = function(request){
   return new Promise((resolve, reject) => {
     request.url = urlParser.parse(request.url);
     request.url.query = queryString.parse(request.url.query);
-
-    
 
     if(request.method !== 'POST' && request.method !== 'PUT'){
       return resolve(request);

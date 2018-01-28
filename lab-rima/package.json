@@ -4,9 +4,9 @@
   "description": "This is an assignment for cf-401 Lab 07: Vanilla HTTP Server",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint .",
     "start": "nodemon index.js",
-    "test": "jest --verbose",
-    "lint": "eslint ."
+    "test": "jest --verbose"
   },
   "repository": {
     "type": "git",

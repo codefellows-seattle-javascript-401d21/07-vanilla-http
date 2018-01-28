@@ -21,7 +21,7 @@ describe('Server module', () => {
               expect(res.status).toBe(200);
               expect(res.text).toEqual(expect.stringContaining('hello from my server!'));
             });
-      });
+        });
 
       test(
         'should respond with a status 200 and cow says text',
@@ -31,7 +31,7 @@ describe('Server module', () => {
               expect(res.status).toBe(200);
               expect(res.text).toEqual(expect.stringContaining('Hello I\'m Cow!'));
             });
-      });
+        });
 
       test(
         'should respond with a status 400 with /cowsay but no text',
@@ -42,21 +42,21 @@ describe('Server module', () => {
               expect(res.status).toBe(400);
               expect(res.text).toEqual(expect.stringContaining('bad request'));
             });
-      });
+        });
     });
 
     describe('POST /', () => {
 
       test(
-        'should respond with a status 200 with text',
+        'should respond with a status 201 with text',
         () => {
           return superagent.post(':8888/cowsay')
             .send({text: 'posting'})
             .then(res => {
-              expect(res.status).toBe(200);
+              expect(res.status).toBe(201);
               expect(res.text).toEqual(expect.stringContaining('posting'));
             });
-      });
+        });
 
       test(
         'should respond with a status 400 with /cowsay but no text',
@@ -68,7 +68,7 @@ describe('Server module', () => {
               expect(res.status).toBe(400);
               expect(res.text).toEqual(expect.stringContaining('bad request'));
             });
-      });
+        });
 
       test(
         'should respond with a status 400 with malformed request',
@@ -80,7 +80,7 @@ describe('Server module', () => {
               expect(res.status).toBe(400);
               expect(res.text).toEqual(expect.stringContaining('bad request'));
             });
-      });
+        });
     });
   });
 });
