@@ -17,7 +17,6 @@ const app = http.createServer((req, res) => { //calling body.parser.parse and pa
       }
       
       if(request.method === 'GET' && request.url.pathname === '/cowsay') { //if GET request and url's pathname is /cowsay
-        console.log(request.url.query);
         res.writeHead(200, {'Content-Type': 'text/plain'}); //write a 200 status code header
         res.write(cowsay.say(request.url.query)); //write to body/HTML page the cowsay.say()'d url query, so whatever is after the ?text=<query here>
         res.end();
@@ -25,7 +24,6 @@ const app = http.createServer((req, res) => { //calling body.parser.parse and pa
       }
 
       if(request.method === 'POST' && request.url.pathname === '/cowsay') { //already parsed a body of data at this point on a request object, so if we have a post and to this route, we are gonna respond by writing headers first
-        console.log(request.body);
         res.writeHead(201, {'Content-Type': 'text/plain'});
         res.write(cowsay.say(request.body)); //cowsaying the body of the POST request
         res.end();
@@ -37,7 +35,7 @@ const app = http.createServer((req, res) => { //calling body.parser.parse and pa
       res.end();
       return;
     })
-    .catch(err => {
+    .catch(() => {
       res.writeHead(400, {'Content-Type': 'text/plain'});
       res.write(cowsay.say({text: 'bad request'}));
       res.end();
