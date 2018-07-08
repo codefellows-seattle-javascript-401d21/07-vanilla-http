@@ -1,0 +1,21 @@
+{
+  "name": "lab-ed",
+  "version": "1.0.0",
+  "description": "HTTP server",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Ed",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^22.1.4",
+    "superagent": "^3.8.2"
+  },
+  "dependencies": {
+    "cowsay": "^1.2.1"
+  }
+}
